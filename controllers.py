@@ -4,7 +4,7 @@ import os
 
 def clear_terminal():
     """
-    Очистка окна терминала
+    Очистка окна терминала в зависимости от типа ОС
 
     :return: None
     """
@@ -25,7 +25,7 @@ def read_file(filename: str) -> dict[dict]:
             for row in reader:
                 result[int(row[0])] = {
                     'task': str(row[1]),
-                    'is_done': bool(int(row[2]))
+                    'is_done': int(row[2])
                 }
     except FileNotFoundError:
         print('Файл не найден. Проверьте имя файла и/или путь к файлу.')
@@ -69,7 +69,7 @@ def save_data(todo: dict):
 
 def print_todo(to_do: dict, done: int) -> None:
     """
-    Вывод в консоль списка дел на основе переданного значения done.
+    Вывод в консоль списка дел на основе переданного значения 'done'.
 
     :param to_do: словарь с данными.
     :param done: параметр match для печати соответствующих данных.
@@ -80,6 +80,7 @@ def print_todo(to_do: dict, done: int) -> None:
             clear_terminal()
             print('Список дел:')
             for key, value in to_do.items():
+                # Вывод ID и названия дела
                 print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
             print('Для возврата в меню нажмите ENTER...')
             input()
@@ -90,6 +91,7 @@ def print_todo(to_do: dict, done: int) -> None:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
+                        # Вывод названия выполненных дел
                         print("\033[36m {} \033[0m".format(value['task']))
             print('Для возврата в меню нажмите ENTER...')
             input()
@@ -100,6 +102,7 @@ def print_todo(to_do: dict, done: int) -> None:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
+                        # Вывод невыполненных дел
                         print("\033[31m {} \033[0m".format(value['task']))
             print('Для возврата в меню нажмите ENTER...')
             input()

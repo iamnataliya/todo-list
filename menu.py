@@ -1,9 +1,8 @@
 import sys
-
 from controllers import *
 
 
-def menu():
+def menu() -> None:
     clear_terminal()
     print('Добро пожаловать!')
     while True:
@@ -20,6 +19,8 @@ def menu():
                 num = abs(int(input('Для продолжения работы введите цифру: ')))
                 if num in (0, 1, 2, 3, 4, 5, 6, 9):
                     break
+                else:
+                    print("\033[32m {} \033[0m".format('Нет такого пункта меню! Повнимательнее=)'))
             except ValueError:
                 print('Wrong input! Try again...')
 
