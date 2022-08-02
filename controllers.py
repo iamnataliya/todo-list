@@ -11,7 +11,7 @@ def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def read_file(filename: str) -> dict[dict]:
+def read_file(filename: str) -> dict:
     """
     Выгружает в память словарь с данными из CSV файла.
 
