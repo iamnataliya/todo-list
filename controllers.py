@@ -1,4 +1,9 @@
 import csv
+import os
+
+
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def read_file(filename: str) -> dict[dict]:
@@ -25,6 +30,22 @@ def read_file(filename: str) -> dict[dict]:
 all_task = read_file('todo.csv')
 
 
+def add_task(todo: dict):
+    pass
+
+
+def edit_task(todo: dict):
+    pass
+
+
+def del_task(todo: dict):
+    pass
+
+
+def save_data(todo: dict):
+    pass
+
+
 def print_todo(to_do: dict, done: int) -> None:
     """
     Вывод в консоль списка дел на основе переданного значения done.
@@ -35,18 +56,30 @@ def print_todo(to_do: dict, done: int) -> None:
     """
     match done:
         case 1:
+            clear_terminal()
             for value in to_do.values():
-                print(value)
+                print("\033[7m {} \033[0m".format(value))
+            print('Для возврата в меню нажмите ENTER...')
+            input()
+            clear_terminal()
         case 2:
+            clear_terminal()
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
-                        print(value)
+                        print("\033[36m {} \033[0m".format(value))
+            print('Для возврата в меню нажмите ENTER...')
+            input()
+            clear_terminal()
         case 3:
+            clear_terminal()
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
-                        print(value)
+                        print("\033[31m {} \033[0m".format(value))
+            print('Для возврата в меню нажмите ENTER...')
+            input()
+            clear_terminal()
 
 
 def main():
