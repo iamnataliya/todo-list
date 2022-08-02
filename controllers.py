@@ -3,6 +3,11 @@ import os
 
 
 def clear_terminal():
+    """
+    Очистка окна терминала
+
+    :return: None
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -31,19 +36,35 @@ all_task = read_file('todo.csv')
 
 
 def add_task(todo: dict):
-    pass
+    clear_terminal()
+    # Start coding here
+    print('Для возврата в меню нажмите ENTER...')
+    input()
+    clear_terminal()
 
 
 def edit_task(todo: dict):
-    pass
+    clear_terminal()
+    # Start coding here
+    print('Для возврата в меню нажмите ENTER...')
+    input()
+    clear_terminal()
 
 
 def del_task(todo: dict):
-    pass
+    clear_terminal()
+    # Start coding here
+    print('Для возврата в меню нажмите ENTER...')
+    input()
+    clear_terminal()
 
 
 def save_data(todo: dict):
-    pass
+    clear_terminal()
+    # Start coding here
+    print('Для возврата в меню нажмите ENTER...')
+    input()
+    clear_terminal()
 
 
 def print_todo(to_do: dict, done: int) -> None:

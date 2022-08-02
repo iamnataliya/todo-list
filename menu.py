@@ -1,3 +1,4 @@
+import sys
 from controllers import *
 
 
@@ -38,7 +39,7 @@ def menu():
                 save_data(all_task)
             case 0:
                 clear_terminal()
-                quit()
+                sys.exit()
 
 
 if __name__ == "__main__":
