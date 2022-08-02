@@ -1,4 +1,5 @@
 import sys
+
 from controllers import *
 
 
@@ -17,7 +18,7 @@ def menu():
         while True:
             try:
                 num = abs(int(input('Для продолжения работы введите цифру: ')))
-                if 0 <= num <= 9:
+                if num in (0, 1, 2, 3, 4, 5, 6, 9):
                     break
             except ValueError:
                 print('Wrong input! Try again...')

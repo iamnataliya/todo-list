@@ -79,7 +79,7 @@ def print_todo(to_do: dict, done: int) -> None:
         case 1:
             clear_terminal()
             for value in to_do.values():
-                print("\033[7m {} \033[0m".format(value))
+                print("\033[7m {} \033[0m".format(value['task']))
             print('Для возврата в меню нажмите ENTER...')
             input()
             clear_terminal()
@@ -88,7 +88,7 @@ def print_todo(to_do: dict, done: int) -> None:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
-                        print("\033[36m {} \033[0m".format(value))
+                        print("\033[36m {} \033[0m".format(value['task']))
             print('Для возврата в меню нажмите ENTER...')
             input()
             clear_terminal()
@@ -97,15 +97,11 @@ def print_todo(to_do: dict, done: int) -> None:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
-                        print("\033[31m {} \033[0m".format(value))
+                        print("\033[31m {} \033[0m".format(value['task']))
             print('Для возврата в меню нажмите ENTER...')
             input()
             clear_terminal()
 
 
-def main():
-    pass
-
-
 if __name__ == "__main__":
-    main()
+    pass
