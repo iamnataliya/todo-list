@@ -78,13 +78,15 @@ def print_todo(to_do: dict, done: int) -> None:
     match done:
         case 1:
             clear_terminal()
-            for value in to_do.values():
-                print("\033[7m {} \033[0m".format(value['task']))
+            print('Список дел:')
+            for key, value in to_do.items():
+                print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
             print('Для возврата в меню нажмите ENTER...')
             input()
             clear_terminal()
         case 2:
             clear_terminal()
+            print('Уже сделано:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
@@ -94,6 +96,7 @@ def print_todo(to_do: dict, done: int) -> None:
             clear_terminal()
         case 3:
             clear_terminal()
+            print('Надо сделать:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
