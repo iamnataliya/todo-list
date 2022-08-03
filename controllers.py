@@ -72,12 +72,11 @@ def del_task(todo: dict):
 
 @clear_terminal
 def save_data(todo: dict):
-    with open('todo-list/todo.csv', 'w', encoding='utf-8') as file:
+    with open('todo.csv', 'w', encoding='utf-8', newline='') as file:
         todo_save = csv.writer(file, delimiter=',')
         for k, v in todo.items():
-            new_line = f"{k}, {v['task']}, {v['is_done']}"
+            new_line = [k, v['task'], v['is_done']]
             todo_save.writerow(new_line)
-            print(k, v['task'], v['is_done'])
 
 
 @clear_terminal
