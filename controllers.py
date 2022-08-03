@@ -40,6 +40,7 @@ all_task = read_file('todo.csv')
 
 @clear_terminal
 def add_task(todo: dict):
+    # TODO: check input
     todo_new = input("Введите новую задачу: ")
     id_new = len(todo.items()) + 1
     result_new = {}
@@ -53,18 +54,36 @@ def add_task(todo: dict):
 
 @clear_terminal
 def edit_task(todo: dict):
-    print_todo(all_task, 1)
+    print('Список дел:')
+    for key, value in todo.items():
+        # Вывод ID, названия дела, статус выполнения
+        print("\033[7m {} \033[0m".format(
+            f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}'))
+
     n = int(input('Введите ID задачи которую хотите изменить: '))
-    for k,v in todo.items():
+    for k, v in todo.items():
         if k == n:
-            v['is_done'] = int(input('Введите статус задачи (1 - выполнено, 0 - не выполнено): '))
-            v['task'] = input('Введите новое название задачи: ')
-    
+            while True:
+                try:
+                    new_status = int(input('Введите статус задачи (1 - выполнено, 0 - не выполнено, любое другое число - не изменит статус): '))
+                    break
+                except ValueError:
+                    print('Wrong input!')
+            if new_status in (0, 1):
+                v['is_done'] = new_status
+            new_task = input('Введите новое название задачи (Enter - не менять название): ')
+            if new_task:
+                v['task'] = new_task
+    print(f'Задача с ID {n} изменена.')
 
 
 @clear_terminal
 def del_task(todo: dict):
-    print_todo(todo, 1)
+    print('Список дел:')
+    for key, value in todo.items():
+        # Вывод ID, названия дела
+        print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
+    # TODO: check input
     del_str = int(input('Введите id задачи для удаления: '))
     del todo[del_str]
     print(f'Задача {del_str} удалена')
@@ -77,6 +96,7 @@ def save_data(todo: dict):
         for k, v in todo.items():
             new_line = [k, v['task'], v['is_done']]
             todo_save.writerow(new_line)
+    print('Данные успешно сохранены!')
 
 
 @clear_terminal
