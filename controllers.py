@@ -35,7 +35,7 @@ def read_file(filename: str) -> dict:
     return result
 
 
-all_task = read_file('homework/hw8/todo-list/todo.csv')
+all_task = read_file('todo.csv')
 
 
 @clear_terminal
@@ -64,12 +64,20 @@ def edit_task(todo: dict):
 
 @clear_terminal
 def del_task(todo: dict):
-    pass
+    print_todo(todo, 1)
+    del_str = int(input('Введите id задачи для удаления: '))
+    del todo[del_str]
+    print(f'Задача {del_str} удалена')
 
 
 @clear_terminal
 def save_data(todo: dict):
-    pass
+    with open('todo-list/todo.csv', 'w', encoding='utf-8') as file:
+        todo_save = csv.writer(file, delimiter=',')
+        for k, v in todo.items():
+            new_line = f"{k}, {v['task']}, {v['is_done']}"
+            todo_save.writerow(new_line)
+            print(k, v['task'], v['is_done'])
 
 
 @clear_terminal
