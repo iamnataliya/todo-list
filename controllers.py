@@ -35,7 +35,7 @@ def read_file(filename: str) -> dict:
     return result
 
 
-all_task = read_file('todo.csv')
+all_task = read_file('homework/hw8/todo-list/todo.csv')
 
 
 @clear_terminal
@@ -53,7 +53,13 @@ def add_task(todo: dict):
 
 @clear_terminal
 def edit_task(todo: dict):
-    pass
+    print_todo(all_task, 1)
+    n = int(input('Введите ID задачи которую хотите изменить: '))
+    for k,v in todo.items():
+        if k == n:
+            v['is_done'] = int(input('Введите статус задачи (1 - выполненно, 0 - не выполненно): '))
+            v['task'] = input('Введите новое название задачи: ')
+    
 
 
 @clear_terminal
