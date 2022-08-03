@@ -1,15 +1,17 @@
 import csv
 import os
-import string
 
 
-def clear_terminal():
-    """
-    Очистка окна терминала в зависимости от типа ОС
+# Декоратор. Очистка окна терминала в зависимости от типа ОС
+def clear_terminal(function):
+    def inner(*args, **kwargs):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        function(*args, **kwargs)
+        print('Для возврата в меню нажмите ENTER...')
+        input()
+        os.system('cls' if os.name == 'nt' else 'clear')
 
-    :return: None
-    """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    return inner
 
 
 def read_file(filename: str) -> dict:
@@ -36,37 +38,34 @@ def read_file(filename: str) -> dict:
 all_task = read_file('todo-list/todo.csv')
 
 
+@clear_terminal
 def add_task(todo: dict):
-    clear_terminal()
     todo_new = input("Введите новую задачу: ")
-    id_new = max(all_task)+1
-    all_task[id_new] = all_task.append(todo_new,0)
-    print('Для возврата в меню нажмите ENTER...')
-    input()
-    clear_terminal()
+    id_new = len(todo.items()) + 1
+    result_new = {}
+    result_new = {
+        'task': todo_new,
+        'is_done': 0
+    }
+    todo[id_new] = result_new
+    print("\033[35m {} \033[0m".format(f"Ваша задача < {todo_new} > добавлена."))
 
 
+@clear_terminal
 def edit_task(todo: dict):
-    clear_terminal()
-    # Start coding here
-    print('Для возврата в меню нажмите ENTER...')
-    input()
-    clear_terminal()
+    pass
 
 
+@clear_terminal
 def del_task(todo: dict):
-    clear_terminal()
     print_todo(todo, 1)
     del_str = int(input('Введите id задачи для удаления: '))
     del todo[del_str]
     print(f'Задача {del_str} удалена')
-    print('Для возврата в меню нажмите ENTER...')
-    input()
-    clear_terminal()
 
 
+@clear_terminal
 def save_data(todo: dict):
-    # clear_terminal()
     with open('todo-list/todo.csv', 'w', encoding='utf-8') as file:
         todo_save = csv.writer(file, delimiter=',')
         for k, v in todo.items():
@@ -74,12 +73,8 @@ def save_data(todo: dict):
             todo_save.writerow(new_line)
             print(k, v['task'], v['is_done'])
 
-    
-    # print('Для возврата в меню нажмите ENTER...')
-    # input()
-    # clear_terminal()
 
-
+@clear_terminal
 def print_todo(to_do: dict, done: int) -> None:
     """
     Вывод в консоль списка дел на основе переданного значения 'done'.
@@ -90,37 +85,21 @@ def print_todo(to_do: dict, done: int) -> None:
     """
     match done:
         case 1:
-            clear_terminal()
             print('Список дел:')
             for key, value in to_do.items():
                 # Вывод ID и названия дела
                 print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
-            print('Для возврата в меню нажмите ENTER...')
-            input()
-            clear_terminal()
         case 2:
-            clear_terminal()
             print('Уже сделано:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
                         # Вывод названия выполненных дел
                         print("\033[36m {} \033[0m".format(value['task']))
-            print('Для возврата в меню нажмите ENTER...')
-            input()
-            clear_terminal()
         case 3:
-            clear_terminal()
             print('Надо сделать:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
                         # Вывод невыполненных дел
                         print("\033[31m {} \033[0m".format(value['task']))
-            print('Для возврата в меню нажмите ENTER...')
-            input()
-            clear_terminal()
-
-
-if __name__ == "__main__":
-    pass
