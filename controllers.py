@@ -1,5 +1,6 @@
 import csv
 import os
+import string
 
 
 def clear_terminal():
@@ -32,12 +33,14 @@ def read_file(filename: str) -> dict:
     return result
 
 
-all_task = read_file('todo.csv')
+all_task = read_file('todo-list/todo.csv')
 
 
 def add_task(todo: dict):
     clear_terminal()
-    # Start coding here
+    todo_new = input("Введите новую задачу: ")
+    id_new = max(all_task)+1
+    all_task[id_new] = all_task.append(todo_new,0)
     print('Для возврата в меню нажмите ENTER...')
     input()
     clear_terminal()
@@ -53,18 +56,28 @@ def edit_task(todo: dict):
 
 def del_task(todo: dict):
     clear_terminal()
-    # Start coding here
+    print_todo(todo, 1)
+    del_str = int(input('Введите id задачи для удаления: '))
+    del todo[del_str]
+    print(f'Задача {del_str} удалена')
     print('Для возврата в меню нажмите ENTER...')
     input()
     clear_terminal()
 
 
 def save_data(todo: dict):
-    clear_terminal()
-    # Start coding here
-    print('Для возврата в меню нажмите ENTER...')
-    input()
-    clear_terminal()
+    # clear_terminal()
+    with open('todo-list/todo.csv', 'w', encoding='utf-8') as file:
+        todo_save = csv.writer(file, delimiter=',')
+        for k, v in todo.items():
+            new_line = f"{k}, {v['task']}, {v['is_done']}"
+            todo_save.writerow(new_line)
+            print(k, v['task'], v['is_done'])
+
+    
+    # print('Для возврата в меню нажмите ENTER...')
+    # input()
+    # clear_terminal()
 
 
 def print_todo(to_do: dict, done: int) -> None:
