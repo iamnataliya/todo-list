@@ -3,7 +3,7 @@ from controllers import *
 
 
 def menu() -> None:
-    clear_terminal()
+    os.system('cls' if os.name == 'nt' else 'clear')
     print('Добро пожаловать!')
     while True:
         print('1 - Показать все задачи\n'
@@ -40,9 +40,5 @@ def menu() -> None:
             case 9:
                 save_data(all_task)
             case 0:
-                clear_terminal()
+                os.system('cls' if os.name == 'nt' else 'clear')
                 sys.exit()
-
-
-if __name__ == "__main__":
-    menu()
