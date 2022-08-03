@@ -1,6 +1,6 @@
 import csv
 import os
-
+import math
 
 def clear_terminal():
     """
@@ -32,15 +32,23 @@ def read_file(filename: str) -> dict:
     return result
 
 
-all_task = read_file('todo.csv')
+all_task = read_file('todo-list/todo.csv')
 
 
 def add_task(todo: dict):
-    clear_terminal()
-    # Start coding here
+    todo_new = input("Введите новую задачу: ")
+    id_new=len(todo.items())+1
+    result_new ={}  
+    result_new= {
+                'task': todo_new,
+                'is_done': 0
+                }
+    todo[id_new]=result_new
+    print(f"Ваша задача < {todo_new} > добавлена, не забудьте coхранить изменения нажав 9")
+    save_data(all_task)  #так лучше чтоб пользователь не забыл        
     print('Для возврата в меню нажмите ENTER...')
     input()
-    clear_terminal()
+    
 
 
 def edit_task(todo: dict):
@@ -60,11 +68,11 @@ def del_task(todo: dict):
 
 
 def save_data(todo: dict):
-    clear_terminal()
+    
     # Start coding here
     print('Для возврата в меню нажмите ENTER...')
     input()
-    clear_terminal()
+    
 
 
 def print_todo(to_do: dict, done: int) -> None:
