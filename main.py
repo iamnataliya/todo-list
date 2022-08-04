@@ -1,7 +1,7 @@
 from menu import *
 
 """
-Attention! Some functions use match statements
+Attention! Some functions use match statements (match/case)
 Python versions 3.9 and below do not support match statements
 """
 

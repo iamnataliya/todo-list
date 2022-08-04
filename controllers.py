@@ -40,15 +40,18 @@ all_task = read_file('todo.csv')
 
 @clear_terminal
 def add_task(todo: dict):
-    # TODO: check input
-    todo_new = input("Введите новую задачу: ")
-    id_new = len(todo.items()) + 1
-    result_new = {}
-    result_new = {
-        'task': todo_new,
-        'is_done': 0
-    }
-    todo[id_new] = result_new
+    while True:  # Проверка ввода
+        todo_new = input("Введите новую задачу: ")
+        if todo_new:
+            id_new = max(list(x for x in todo.keys())) + 1
+            result_new = {
+                'task': todo_new,
+                'is_done': 0
+            }
+            todo[id_new] = result_new
+            break
+        else:
+            print('Название не может быть пустым')
     print("\033[35m {} \033[0m".format(f"Ваша задача < {todo_new} > добавлена."))
 
 
@@ -59,22 +62,32 @@ def edit_task(todo: dict):
         # Вывод ID, названия дела, статус выполнения
         print("\033[7m {} \033[0m".format(
             f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}'))
-
-    n = int(input('Введите ID задачи которую хотите изменить: '))
-    for k, v in todo.items():
-        if k == n:
-            while True:
-                try:
-                    new_status = int(input('Введите статус задачи (1 - выполнено, 0 - не выполнено, любое другое число - не изменит статус): '))
-                    break
-                except ValueError:
-                    print('Wrong input!')
-            if new_status in (0, 1):
-                v['is_done'] = new_status
-            new_task = input('Введите новое название задачи (Enter - не менять название): ')
-            if new_task:
-                v['task'] = new_task
-    print(f'Задача с ID {n} изменена.')
+    try:  # Проверка ввода
+        n = abs(int(input('Введите ID задачи которую хотите изменить: ')))
+    except ValueError:
+        print('Wrong input')
+    if n in todo.keys():
+        for k, v in todo.items():
+            if k == n:
+                while True:
+                    try:  # Проверка ввода
+                        new_status = int(input('Введите статус задачи\n'
+                                               '1 - выполнено, 0 - не выполнено\n'
+                                               'любое другое число - не менять статус\n'
+                                               '>>> '))
+                        break
+                    except ValueError:
+                        print('Wrong input!')
+                if new_status in (0, 1):
+                    v['is_done'] = new_status
+                new_task = input('Введите новое название задачи\n'
+                                 'Enter - не менять название\n'
+                                 '>>> ')
+                if new_task:
+                    v['task'] = new_task
+    else:
+        print(f'ID {n} не найден')
+    print(f'Операция завершена.')
 
 
 @clear_terminal
@@ -83,10 +96,17 @@ def del_task(todo: dict):
     for key, value in todo.items():
         # Вывод ID, названия дела
         print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
-    # TODO: check input
-    del_str = int(input('Введите id задачи для удаления: '))
-    del todo[del_str]
-    print(f'Задача {del_str} удалена')
+    while True:  # Проверка ввода
+        try:
+            del_id = abs(int(input('Введите id задачи для удаления: ')))
+        except ValueError:
+            print('Wrong input')
+        if del_id in todo.keys():
+            del todo[del_id]
+            break
+        else:
+            print(f'ID {del_id} не найден')
+    print(f'Задача {del_id} удалена')
 
 
 @clear_terminal
