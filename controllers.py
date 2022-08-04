@@ -2,8 +2,7 @@ import csv
 import os
 
 
-# Декоратор. Очистка окна терминала в зависимости от типа ОС
-def clear_terminal(function):
+def clear_terminal(function):  # Декоратор. Очистка окна терминала в зависимости от типа ОС
     def inner(*args, **kwargs):
         os.system('cls' if os.name == 'nt' else 'clear')
         function(*args, **kwargs)
